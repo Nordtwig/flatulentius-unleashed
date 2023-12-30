@@ -1,6 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://btlnbhl4f7sou"]
+[gd_scene load_steps=6 format=3 uid="uid://btlnbhl4f7sou"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_5r5sn"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r5w7q"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_432g3"]
+sky_material = SubResource("ProceduralSkyMaterial_r5w7q")
+
+[sub_resource type="Environment" id="Environment_5ks60"]
+background_mode = 2
+sky = SubResource("Sky_432g3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_vge2q"]
+
 [node name="Player" type="Node3D"]
 script = ExtResource("1_5r5sn")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5ks60")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vge2q")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+top_level = true
