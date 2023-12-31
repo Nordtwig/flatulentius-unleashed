@@ -6,7 +6,7 @@ extends RigidBody3D
 ## How much torque to apply when rotating.
 @export_range(5.0, 200.0) var torque : float = 80.0
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("boost"):
 			apply_central_force(basis.y * delta * thrust)	
 	
@@ -16,8 +16,19 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("rotate_right"):
 		apply_torque(Vector3(0.0, 0.0, -torque * delta))
 
+func crash_sequence() -> void:
+	print("Kaboom!")
+	await get_tree().create_timer(1.5).timeout
+	get_tree().reload_current_scene()
+
+func complete_level() -> void:
+	print("You win!")
+	await get_tree().create_timer(1.5).timeout
+	get_tree().quit()
+
+# SIGNAL LISTENERS
 func _on_body_entered(body:Node) -> void:
 	if "goal" in body.get_groups():
-		print(body.name)
+		complete_level()	
 	elif "hazard" in body.get_groups():
-		print("You crashed and burned!")
+		crash_sequence()	
