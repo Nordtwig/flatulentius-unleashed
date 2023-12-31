@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://btlnbhl4f7sou"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_xv0na"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vge2q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0y6h2"]
+
+[node name="Player" type="RigidBody3D"]
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+linear_damp = 1.0
+angular_damp = 3.0
+script = ExtResource("1_xv0na")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vge2q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_0y6h2")
