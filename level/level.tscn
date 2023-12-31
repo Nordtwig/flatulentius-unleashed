@@ -53,7 +53,6 @@ material = SubResource("StandardMaterial3D_bjw4l")
 
 [node name="Player" parent="." instance=ExtResource("1_jxxc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4925, 1.04574, 0)
-thrust = 1000.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.959496, 0.281722, 0, -0.281722, 0.959496, 0, 10.2828, 10.6654)
