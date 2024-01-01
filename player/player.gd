@@ -21,14 +21,14 @@ func crash_sequence() -> void:
 	await get_tree().create_timer(1.5).timeout
 	get_tree().reload_current_scene()
 
-func complete_level() -> void:
+func complete_level(next_level_file: String) -> void:
 	print("You win!")
 	await get_tree().create_timer(1.5).timeout
-	get_tree().quit()
+	get_tree().change_scene_to_file(next_level_file)
 
 # SIGNAL LISTENERS
 func _on_body_entered(body:Node) -> void:
 	if "goal" in body.get_groups():
-		complete_level()	
+		complete_level(body.file_path)	
 	elif "hazard" in body.get_groups():
 		crash_sequence()	
