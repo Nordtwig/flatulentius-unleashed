@@ -6,6 +6,8 @@ extends RigidBody3D
 ## How much torque to apply when rotating.
 @export_range(5.0, 200.0) var torque : float = 80.0
 
+var is_transitioning: bool = false
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("boost"):
 			apply_central_force(basis.y * delta * thrust)	
@@ -18,16 +20,26 @@ func _physics_process(delta: float) -> void:
 
 func crash_sequence() -> void:
 	print("Kaboom!")
-	await get_tree().create_timer(1.5).timeout
-	get_tree().reload_current_scene()
+	set_physics_process(false)
+	is_transitioning = true
+	# await get_tree().create_timer(1.5).timeout
+	var tween = create_tween()
+	tween.tween_interval(1.0)
+	tween.tween_callback(get_tree().reload_current_scene)
 
 func complete_level(next_level_file: String) -> void:
 	print("You win!")
-	await get_tree().create_timer(1.5).timeout
-	get_tree().change_scene_to_file(next_level_file)
+	set_physics_process(false)
+	is_transitioning = true
+	# await get_tree().create_timer(1.5).timeout
+	var tween = create_tween()
+	tween.tween_interval(1.0)
+	tween.tween_callback(get_tree().change_scene_to_file.bind(next_level_file))
 
 # SIGNAL LISTENERS
 func _on_body_entered(body:Node) -> void:
+	if is_transitioning:
+		return 
 	if "goal" in body.get_groups():
 		complete_level(body.file_path)	
 	elif "hazard" in body.get_groups():
