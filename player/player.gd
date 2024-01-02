@@ -9,23 +9,34 @@ extends RigidBody3D
 @onready var explosion_audio = $ExplosionAudio
 @onready var success_audio = $SuccessAudio
 @onready var rocket_audio = $RocketAudio
+@onready var booster_particles = $BoosterParticles
+@onready var right_booster_particles = $RightBoosterParticles
+@onready var left_booster_particles = $LeftBoosterParticles
 
 var is_transitioning: bool = false
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("boost"):
 			apply_central_force(basis.y * delta * thrust)	
+			booster_particles.emitting = true
 			if rocket_audio.playing == false:
 				rocket_audio.play()
 	else:
+		booster_particles.emitting = false
 		rocket_audio.stop()
 
 	
 	if Input.is_action_pressed("rotate_left"):
 		apply_torque(Vector3(0.0, 0.0, torque * delta))	
+		right_booster_particles.emitting = true
+	else:
+		right_booster_particles.emitting = false 
 	
 	if Input.is_action_pressed("rotate_right"):
 		apply_torque(Vector3(0.0, 0.0, -torque * delta))
+		left_booster_particles.emitting = true
+	else:
+		left_booster_particles.emitting = false 
 
 func crash_sequence() -> void:
 	print("Kaboom!")

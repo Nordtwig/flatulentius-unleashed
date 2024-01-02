@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://btlnbhl4f7sou"]
+[gd_scene load_steps=8 format=3 uid="uid://btlnbhl4f7sou"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xv0na"]
 [ext_resource type="AudioStream" uid="uid://bd2pqg8uhrbnd" path="res://assets/audio/SFX - Death Explosion.ogg" id="2_bmy73"]
 [ext_resource type="AudioStream" uid="uid://b6un0sblmjn7l" path="res://assets/audio/SFX - Success.ogg" id="3_qxhm3"]
 [ext_resource type="AudioStream" uid="uid://d4g02mtlip2tp" path="res://assets/audio/SFX - Main engine thrust.ogg" id="4_qql8o"]
+[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://booster_particles.tscn" id="5_wpobm"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vge2q"]
 
@@ -37,5 +38,14 @@ volume_db = -12.0
 stream = ExtResource("4_qql8o")
 volume_db = 5.0
 pitch_scale = 0.6
+
+[node name="BoosterParticles" parent="." instance=ExtResource("5_wpobm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+
+[node name="RightBoosterParticles" parent="." instance=ExtResource("5_wpobm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404958, -0.6, -0.000424385)
+
+[node name="LeftBoosterParticles" parent="." instance=ExtResource("5_wpobm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, -0.6, 0)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
