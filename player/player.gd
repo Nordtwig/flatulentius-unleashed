@@ -12,6 +12,8 @@ extends RigidBody3D
 @onready var booster_particles = $BoosterParticles
 @onready var right_booster_particles = $RightBoosterParticles
 @onready var left_booster_particles = $LeftBoosterParticles
+@onready var explosion_particles = $ExplosionParticles
+@onready var success_particles = $SuccessParticles
 
 var is_transitioning: bool = false
 
@@ -40,6 +42,7 @@ func _physics_process(delta: float) -> void:
 
 func crash_sequence() -> void:
 	print("Kaboom!")
+	explosion_particles.emitting = true
 	explosion_audio.play()
 	set_physics_process(false)
 	is_transitioning = true
@@ -50,6 +53,7 @@ func crash_sequence() -> void:
 
 func complete_level(next_level_file: String) -> void:
 	print("You win!")
+	success_particles.emitting = true
 	success_audio.play()
 	set_physics_process(false)
 	is_transitioning = true

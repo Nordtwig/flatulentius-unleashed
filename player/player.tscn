@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://btlnbhl4f7sou"]
+[gd_scene load_steps=10 format=3 uid="uid://btlnbhl4f7sou"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xv0na"]
 [ext_resource type="AudioStream" uid="uid://bd2pqg8uhrbnd" path="res://assets/audio/SFX - Death Explosion.ogg" id="2_bmy73"]
 [ext_resource type="AudioStream" uid="uid://b6un0sblmjn7l" path="res://assets/audio/SFX - Success.ogg" id="3_qxhm3"]
 [ext_resource type="AudioStream" uid="uid://d4g02mtlip2tp" path="res://assets/audio/SFX - Main engine thrust.ogg" id="4_qql8o"]
-[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://booster_particles.tscn" id="5_wpobm"]
+[ext_resource type="PackedScene" uid="uid://ux6ivcx1ovdp" path="res://particles/booster_particles.tscn" id="5_xe1bw"]
+[ext_resource type="PackedScene" uid="uid://dcecb8hw7dbrv" path="res://particles/explosion_particles.tscn" id="6_fxr8h"]
+[ext_resource type="PackedScene" uid="uid://jfwajmrh6ca7" path="res://particles/success_particles.tscn" id="7_t520h"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vge2q"]
 
@@ -39,13 +41,19 @@ stream = ExtResource("4_qql8o")
 volume_db = 5.0
 pitch_scale = 0.6
 
-[node name="BoosterParticles" parent="." instance=ExtResource("5_wpobm")]
+[node name="BoosterParticles" parent="." instance=ExtResource("5_xe1bw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 
-[node name="RightBoosterParticles" parent="." instance=ExtResource("5_wpobm")]
+[node name="RightBoosterParticles" parent="." instance=ExtResource("5_xe1bw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404958, -0.6, -0.000424385)
 
-[node name="LeftBoosterParticles" parent="." instance=ExtResource("5_wpobm")]
+[node name="LeftBoosterParticles" parent="." instance=ExtResource("5_xe1bw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, -0.6, 0)
+
+[node name="ExplosionParticles" parent="." instance=ExtResource("6_fxr8h")]
+explosiveness = 0.9
+
+[node name="SuccessParticles" parent="." instance=ExtResource("7_t520h")]
+explosiveness = 0.8
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
