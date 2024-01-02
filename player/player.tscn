@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://btlnbhl4f7sou"]
+[gd_scene load_steps=12 format=3 uid="uid://btlnbhl4f7sou"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xv0na"]
+[ext_resource type="Material" uid="uid://whryejyl4pxl" path="res://player/OuthouseBrownMaterial.tres" id="2_6022r"]
 [ext_resource type="AudioStream" uid="uid://bd2pqg8uhrbnd" path="res://assets/audio/SFX - Death Explosion.ogg" id="2_bmy73"]
 [ext_resource type="AudioStream" uid="uid://b6un0sblmjn7l" path="res://assets/audio/SFX - Success.ogg" id="3_qxhm3"]
 [ext_resource type="AudioStream" uid="uid://d4g02mtlip2tp" path="res://assets/audio/SFX - Main engine thrust.ogg" id="4_qql8o"]
@@ -8,9 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://dcecb8hw7dbrv" path="res://particles/explosion_particles.tscn" id="6_fxr8h"]
 [ext_resource type="PackedScene" uid="uid://jfwajmrh6ca7" path="res://particles/success_particles.tscn" id="7_t520h"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_vge2q"]
+[sub_resource type="BoxMesh" id="BoxMesh_c1gso"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mt4hi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0y6h2"]
+size = Vector3(1, 2.00012, 1)
 
 [node name="Player" type="RigidBody3D"]
 axis_lock_linear_z = true
@@ -22,10 +27,25 @@ linear_damp = 1.0
 angular_damp = 3.0
 script = ExtResource("1_xv0na")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_vge2q")
+[node name="OuthouseBody" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499818, 0)
+material_override = ExtResource("2_6022r")
+mesh = SubResource("BoxMesh_c1gso")
+
+[node name="OuthouseDoor" type="MeshInstance3D" parent="OuthouseBody"]
+transform = Transform3D(0.828499, 0, 0, 0, 0.861155, 0, 0, 0, 0.0888003, 0.00586033, -0.0216044, 0.515977)
+material_override = ExtResource("2_6022r")
+mesh = SubResource("BoxMesh_c1gso")
+skeleton = NodePath("../..")
+
+[node name="OuthouseTop" type="MeshInstance3D" parent="OuthouseBody"]
+transform = Transform3D(0.484291, -0.46204, 0, 0.46204, 0.484291, 0, 0, 0, 1, 0.00258138, 0.985861, 0.00133419)
+material_override = ExtResource("2_6022r")
+mesh = SubResource("BoxMesh_mt4hi")
+skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500061, 0)
 shape = SubResource("BoxShape3D_0y6h2")
 
 [node name="ExplosionAudio" type="AudioStreamPlayer" parent="."]
@@ -45,10 +65,10 @@ pitch_scale = 0.6
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
 
 [node name="RightBoosterParticles" parent="." instance=ExtResource("5_xe1bw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.404958, -0.6, -0.000424385)
+transform = Transform3D(0.939693, -0.34202, 0, 0.34202, 0.939693, 0, 0, 0, 1, 0.404958, -0.6, -0.000424385)
 
 [node name="LeftBoosterParticles" parent="." instance=ExtResource("5_xe1bw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405, -0.6, 0)
+transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -0.405, -0.6, 0)
 
 [node name="ExplosionParticles" parent="." instance=ExtResource("6_fxr8h")]
 explosiveness = 0.9
